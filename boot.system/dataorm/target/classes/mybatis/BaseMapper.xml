@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.system.dataorm.mapper.BaseMapper" >
+
+  <resultMap id="BaseResultMap" type="com.boot.system.dataorm.entity.BaseEntity" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, LOGIN_NAME
+  </sql>  
+    
+  <insert id="insert" parameterType="com.boot.system.dataorm.entity.BaseEntity">
+    insert into GSS_SYS_USER (ID, USER_ID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.boot.system.dataorm.entity.BaseEntity">
+    insert into GSS_SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>      
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.boot.system.dataorm.entity.BaseEntity">
+    update GSS_SYS_USER
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR}      
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updatSelective" parameterType="com.boot.system.dataorm.entity.BaseEntity">
+    update GSS_SYS_USER
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>      
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="delete" parameterType="java.lang.String">
+    delete from GSS_SYS_USER where ID = #{id, jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from GSS_SYS_USER 
+        where ID in 
+		<foreach index="index" item="item" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <select id="getEntityById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from GSS_SYS_USER
+    	where ID = #{id,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="java.util.Map">
+	    select 
+	    <include refid="Base_Column_List" /> 
+	    from GSS_SYS_USER
+		<where>
+		    <if test="id != null and id != ''" >
+	           ID = #{id}
+	        </if>				        
+	        <if test="userName != null and userName != ''" >
+	           and USER_NAME like concat('%',#{userName} ,'%')	           
+	        </if>
+		</where>
+		order by CREATE_DATE desc
+	    <if test="startIndex != null and pageSize != null">
+	      limit #{startIndex}, #{pageSize}
+	    </if>
+   </select>
+  
+  <select id="getCount" resultType="java.lang.Long" parameterType="java.util.Map">
+	    select count(*) from GSS_SYS_USER
+		<where>
+		    <if test="id != null and id != ''" >
+	           ID = #{id}
+	        </if>				        
+	        <if test="userName != null and userName != ''" >
+	           and USER_NAME like concat('%',#{userName} ,'%')
+	        </if>
+		</where>		
+   </select>
+   
+   <insert id="insertBatch" parameterType="java.util.List">
+	    insert into GSS_SYS_USER (ID, USER_ID)
+    	values 
+	    <foreach collection="list" item="item" index="index" separator="," >
+	   		(#{item.id}, #{item.userId})
+	    </foreach>
+    </insert>  
+   
+</mapper>

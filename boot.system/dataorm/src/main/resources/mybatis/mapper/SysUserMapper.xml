@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.system.dataorm.mapper.SysUserMapper" >
+
+  <resultMap id="BaseResultMap" type="com.boot.system.dataorm.entity.SysUserEntity" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+     <result column="PHOTO" property="photo" jdbcType="VARCHAR" />
+    <result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
+    <result column="BIRTH_DATE" property="birthDate" jdbcType="DATE" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="HEAD_PIC" property="headPic" jdbcType="VARCHAR" />
+    <result column="INTRODUCTION" property="introduction" jdbcType="VARCHAR" />
+    <result column="JOB_TITLE" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="JOB_LEVEL" property="jobLevel" jdbcType="VARCHAR" />
+    <result column="QQ_NUM" property="qqNum" jdbcType="VARCHAR" />
+    <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
+    <result column="USER_LEVEL" property="userLevel" jdbcType="INTEGER" />
+    <result column="USER_PY" property="userPy" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="VARCHAR" />
+    <result column="CHANGE_APPR" property="changeAppr" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, PHOTO,LOGIN_NAME, USER_NAME, MOBILE, PHONE, USER_PWD, NICK_NAME, SEX, EMAIL, ID_NUMBER, 
+    BIRTH_DATE, EDUCATION, HEAD_PIC, INTRODUCTION, JOB_TITLE, JOB_LEVEL, QQ_NUM, WECHAT, 
+    USER_LEVEL, USER_PY, USER_TYPE, USER_STATUS, CHANGE_APPR, CREATE_USER, CREATE_DATE, UPDATE_DATE,
+    UPDATE_USER
+  </sql>  
+    
+  <insert id="insert" parameterType="com.boot.system.dataorm.entity.SysUserEntity">
+    insert into GSS_SYS_USER (ID, USER_ID, USER_TYPE, 
+      BALANCE, REMARKS, CREATE_USER, 
+      CREATE_DATE, UPDATE_DATE, UPDATE_USER
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=DOUBLE}, #{remarks,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.boot.system.dataorm.entity.SysUserEntity">
+    insert into GSS_SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="balance != null">
+        BALANCE,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="update" parameterType="com.boot.system.dataorm.entity.SysUserEntity">
+    update GSS_SYS_USER
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=VARCHAR},
+      BALANCE = #{balance,jdbcType=DOUBLE},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updatSelective" parameterType="com.boot.system.dataorm.entity.SysUserEntity">
+    update GSS_SYS_USER
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        BALANCE = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="delete" parameterType="java.lang.String">
+    delete from GSS_SYS_USER where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from GSS_SYS_USER 
+        where ID in 
+		<foreach index="index" item="item" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <select id="getEntityById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from GSS_SYS_USER
+    	where ID = #{id,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  
+  <select id="getList" resultMap="BaseResultMap" parameterType="java.util.Map">
+	    select 
+	    <include refid="Base_Column_List" /> 
+	    from GSS_SYS_USER
+		<where>
+		    <if test="id != null and id != ''" >
+	           ID = #{id}
+	        </if>				        
+	        <if test="userName != null and userName != ''" >
+	           and USER_NAME like concat('%',#{userName} ,'%')	           
+	        </if>
+		</where>
+		order by CREATE_DATE desc
+	    <if test="startIndex != null and pageSize != null">
+	      limit #{startIndex}, #{pageSize}
+	    </if>
+   </select>
+  
+  <select id="getCount" resultType="java.lang.Long" parameterType="java.util.Map">
+	    select count(*) from GSS_SYS_USER
+		<where>
+		    <if test="id != null and id != ''" >
+	           ID = #{id}
+	        </if>				        
+	        <if test="userName != null and userName != ''" >
+	           and USER_NAME like concat('%',#{userName} ,'%')
+	        </if>
+		</where>		
+   </select>
+   
+   <insert id="insertBatch" parameterType="java.util.List">
+	    insert into GSS_SYS_USER (ID, USER_ID, USER_TYPE, 
+	      	BALANCE, REMARKS, CREATE_USER, 
+	      	CREATE_DATE, UPDATE_DATE, UPDATE_USER
+	     )
+    	values 
+	    <foreach collection="list" item="item" index="index" separator="," >
+	   		(#{item.id}, #{item.userId}, #{item.userType}, 
+		     #{item.balance}, #{item.remarks},
+		     #{item.createDate}, #{item.updateDate}, #{item.updateUser})
+	    </foreach>
+    </insert>
+   
+   <select id="getUserByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select  
+    	<include refid="Base_Column_List" />
+    from GSS_SYS_USER   
+    	where WECHAT = #{openId}
+    limit 1
+  </select>
+   
+</mapper>
